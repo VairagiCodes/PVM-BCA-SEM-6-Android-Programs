@@ -1,15 +1,17 @@
-package com.vairagicodes.implicitintent;
+package com.vairagicodes.musicplayer;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.vairagicodes.musicplayer.service.MusicPlayerService;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,23 +26,24 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
-        EditText opeURlEditText = findViewById(R.id.get_url_et);
-
-
-        Button openUrlButton = findViewById(R.id.open_url_btn);
+        Button startMusic = findViewById(R.id.play_music_btn);
+        Button stopMusic = findViewById(R.id.stop_music_btn);
 
 
-        openUrlButton.setOnClickListener(v -> {
-
-            String url = opeURlEditText.getText().toString().trim();
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            startActivity(intent);
-
-
+        startMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startService(new Intent(MainActivity.this, MusicPlayerService.class));
+            }
         });
 
+
+        stopMusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopService(new Intent(MainActivity.this, MusicPlayerService.class));
+            }
+        });
 
     }
 }
