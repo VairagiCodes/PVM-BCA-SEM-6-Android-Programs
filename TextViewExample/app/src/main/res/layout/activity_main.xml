@@ -5,23 +5,20 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".MainActivity"
     android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    >
 
-    <Button
-        android:id="@+id/play_music_btn"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/play_music"
-
+        android:text="Hello World!"
+        android:textColor="#55ff33"
+        android:textSize="50sp"
+        android:textAllCaps="true"
+        android:background="@color/black"
+        android:padding="30dp"
+        android:textStyle="bold|italic"
         />
-
-    <Button
-        android:id="@+id/stop_music_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/stop_music" />
-
 
 </LinearLayout>
