@@ -4,19 +4,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:orientation="vertical"
     android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
 
     >
 
     <Button
+        android:id="@+id/click_me_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Click me"
-        android:id="@+id/click_me_button"
-        android:textAllCaps="true"
         android:gravity="top"
-        />
+        android:text="Click me"
+        android:textAllCaps="true" />
+
 
 </LinearLayout>

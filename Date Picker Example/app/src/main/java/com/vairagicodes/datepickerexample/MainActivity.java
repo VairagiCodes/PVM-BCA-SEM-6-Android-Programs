@@ -1,9 +1,10 @@
-package com.vairagicodes.buttonexample;
+package com.vairagicodes.datepickerexample;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,18 +25,22 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        Button button = findViewById(R.id.click_me_button);
+        DatePicker datePicker = findViewById(R.id.current_date_picker);
+        Button button = findViewById(R.id.get_date_button);
+        TextView setDateTextView = findViewById(R.id.date_tv);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Button", Toast.LENGTH_SHORT).show();
+                int day = datePicker.getDayOfMonth();
+                int month = datePicker.getMonth();
+                int year = datePicker.getYear();
 
+                setDateTextView.setVisibility(View.VISIBLE);
+                setDateTextView.setText("Selected Date: " + day + "/" + (month + 1) + "/" + year);
 
             }
         });
 
     }
-
-
 }
