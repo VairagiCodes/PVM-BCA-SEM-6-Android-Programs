@@ -10,39 +10,34 @@
     >
 
     <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/options_rg"
-        >
-
-    <RadioButton
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Option 1"
-        android:id="@+id/option_one_rb"
-     />
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/option_one_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Option 1" />
 
 
         <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Option 2"
             android:id="@+id/option_two_rb"
-            />
-
-        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 3"
+            android:text="Option 2" />
+
+        <RadioButton
             android:id="@+id/option_three_rb"
-            />
-
-        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Option 4"
+            android:text="Option 3" />
+
+        <RadioButton
             android:id="@+id/option_four_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:checked="true"
-            />
+            android:text="Option 4" />
     </RadioGroup>
 </LinearLayout>
