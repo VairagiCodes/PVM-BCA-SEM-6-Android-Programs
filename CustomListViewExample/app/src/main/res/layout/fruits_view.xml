@@ -10,6 +10,7 @@
         android:layout_height="48dp"
         android:src="@drawable/apple"
         android:layout_gravity="center"
+        android:id="@+id/fruit_iv"
         />
 
     <TextView
@@ -19,6 +20,7 @@
         android:textSize="40sp"
         android:layout_marginStart="30dp"
         android:layout_gravity="center"
+        android:id="@+id/fruit_tv"
         />
 
 </LinearLayout>
