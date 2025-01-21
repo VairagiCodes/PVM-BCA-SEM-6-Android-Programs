@@ -29,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         SharedPreferences sharedPreferences = getSharedPreferences("userPref",MODE_PRIVATE);
+
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putInt("UserLogin",0);
+
+
+        editor.putBoolean("UserLogin",true);
         editor.apply();
 
         Button button = findViewById(R.id.click_me_btn);

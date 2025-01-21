@@ -10,6 +10,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.vairagicodes.sharedprefexample.util.SharedPrefUtil;
+
 public class SecondActivity extends AppCompatActivity {
 
     @Override
@@ -25,9 +27,13 @@ public class SecondActivity extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("userPref",MODE_PRIVATE);
 
-      int value = sharedPreferences.getInt("UserLogin",1);
+        int value = sharedPreferences.getInt("UserLogin",1);
 
         Toast.makeText(this,value+" ",Toast.LENGTH_SHORT).show();
+
+
+        SharedPrefUtil.userLogeedInOrNot(this,true);
+        Boolean isUserLogin = SharedPrefUtil.isUserLoggedIn(this);
 
 
     }

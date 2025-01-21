@@ -1,0 +1,44 @@
+package com.vairagicodes.databaseexample;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.vairagicodes.databaseexample.db.DBHelper;
+import com.vairagicodes.databaseexample.model.NotesModel;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.activity_main);
+
+        DBHelper dbHelper = new DBHelper(MainActivity.this);
+
+
+        EditText notesTitle = findViewById(R.id.notes_title);
+        EditText notesDes= findViewById(R.id.notes_des);
+        Button saveBtn= findViewById(R.id.save_notes);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String noteDes = notesDes.getText().toString();
+                String noteTitle = notesTitle.getText().toString();
+
+                NotesModel notesModel = new NotesModel(noteTitle,noteDes);
+
+                dbHelper.addNotes(notesModel.getTitle(),notesModel.getDescription());
+            }
+        });
+
+
+
+    }
+}
