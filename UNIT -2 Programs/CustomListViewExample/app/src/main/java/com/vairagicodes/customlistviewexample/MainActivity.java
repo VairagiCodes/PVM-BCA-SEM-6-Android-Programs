@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         fruitsModels.add(new FruitsModel("Apple",R.drawable.apple));
 
         FruitsAdapter fruitsAdapter = new FruitsAdapter(this,fruitsModels);
-    listView.setAdapter(fruitsAdapter);
+        listView.setAdapter(fruitsAdapter);
 
     }
 

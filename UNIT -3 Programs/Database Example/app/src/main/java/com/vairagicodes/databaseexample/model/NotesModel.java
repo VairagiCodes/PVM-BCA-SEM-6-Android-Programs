@@ -2,6 +2,11 @@ package com.vairagicodes.databaseexample.model;
 
 public class NotesModel {
 
+    public int getId() {
+        return id;
+    }
+
+    private int id;
     private String title;
     private String description;
 
@@ -14,13 +19,10 @@ public class NotesModel {
     }
 
 
-
     public NotesModel(String title, String description) {
         this.title = title;
         this.description = description;
     }
-
-
 
 
 }

@@ -1,5 +1,6 @@
 package com.vairagicodes.databaseexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +23,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         EditText notesTitle = findViewById(R.id.notes_title);
-        EditText notesDes= findViewById(R.id.notes_des);
-        Button saveBtn= findViewById(R.id.save_notes);
+        EditText notesDes = findViewById(R.id.notes_des);
+        Button saveBtn = findViewById(R.id.save_notes);
+
+        Button readBtn = findViewById(R.id.read_notes);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,12 +35,18 @@ public class MainActivity extends AppCompatActivity {
                 String noteDes = notesDes.getText().toString();
                 String noteTitle = notesTitle.getText().toString();
 
-                NotesModel notesModel = new NotesModel(noteTitle,noteDes);
+                NotesModel notesModel = new NotesModel(noteTitle, noteDes);
 
-                dbHelper.addNotes(notesModel.getTitle(),notesModel.getDescription());
+                dbHelper.addNotes(notesModel.getTitle(), notesModel.getDescription());
             }
         });
 
+        readBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,AllNotesActivity.class));
+            }
+        });
 
 
     }

@@ -8,11 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,20 +22,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         Button saveButton = findViewById(R.id.btn_save_file);
         Button readButton = findViewById(R.id.btn_read_file);
 
         EditText fileNameEt = findViewById(R.id.file_name_et);
         EditText fileDataEt = findViewById(R.id.file_data_et);
-        TextView data_tv = findViewById(R.id.data_tv);
+        TextView dataTextView = findViewById(R.id.data_tv);
 
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Storage is not available", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    File file = new File(getExternalFilesDir("pvm"), fileNameEt.getText().toString());
+                    File file = new File(getExternalFilesDir("VairagiCodes"), fileNameEt.getText().toString());
                     writeData(file, fileDataEt.getText().toString());
 
                 }
@@ -64,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
                 if (isExternalStorageReadOnly() || !isExternalStorageAvailable()) {
                     Toast.makeText(MainActivity.this, "Storage is not available", Toast.LENGTH_SHORT).show();
                 } else {
-                    File file = new File(getExternalFilesDir("pvm"), fileNameEt.getText().toString());
+                    File file = new File(getExternalFilesDir("VairagiCodes"), fileNameEt.getText().toString());
 
                     String data = readData(file);
-                    data_tv.setVisibility(View.VISIBLE);
-                    data_tv.setText(data);
+                    dataTextView.setVisibility(View.VISIBLE);
+                    dataTextView.setText(data);
 
                 }
             }

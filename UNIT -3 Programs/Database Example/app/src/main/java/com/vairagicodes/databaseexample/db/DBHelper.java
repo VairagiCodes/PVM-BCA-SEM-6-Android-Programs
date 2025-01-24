@@ -2,26 +2,38 @@ package com.vairagicodes.databaseexample.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
+import com.vairagicodes.databaseexample.model.NotesModel;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DB_NAME = "NotesDB";
     public static final int DB_VERSION = 1;
 
-    public DBHelper( Context context) {
-        super(context,DB_NAME,null, DB_VERSION);
+    public static final String TABLE_NAME = "NotesData";
+
+    public static final String COL_ID = "id";
+    public static final String COL_TITLE = "title";
+    public static final String COL_DESCRIPTION = "description";
+
+
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String dbQuery = "CREATE TABLE NotesData (" +
-                "id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                +"title TEXT,"
-                + "description TEXT)";
+        String dbQuery = "CREATE TABLE " + TABLE_NAME + "("
+                + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COL_TITLE + " TEXT,"
+                + COL_DESCRIPTION + " TEXT)";
 
         db.execSQL(dbQuery);
     }
@@ -35,12 +47,53 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("title",title);
-        values.put("description",description
+        values.put(COL_TITLE, title);
+        values.put(COL_DESCRIPTION, description
         );
 
         db.insert("NotesData", null, values);
 
     }
+
+    public List<NotesModel> fetchAllNotes() {
+
+        List<NotesModel> notesModelList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String dbQuery = "SELECT * FROM " + TABLE_NAME;
+        Cursor cursor = db.rawQuery(dbQuery, null);
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+
+        do {
+            NotesModel notesModel = new NotesModel(cursor.getString(1), cursor.getString(2));
+            notesModelList.add(notesModel);
+        }
+
+        while (cursor.moveToNext());
+
+        return notesModelList;
+    }
+
+    public void updateRecord(NotesModel notesModel) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COL_TITLE, notesModel.getTitle());
+        values.put(COL_DESCRIPTION, notesModel.getDescription());
+
+        db.update(TABLE_NAME,values,COL_ID + "=?",new String[]{String.valueOf(notesModel.getId())});
+
+
+    }
+
+    public void deleteRecord(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME,COL_ID + "=?",new String[]{String.valueOf(id)});
+
+
+    }
+
 
 }
