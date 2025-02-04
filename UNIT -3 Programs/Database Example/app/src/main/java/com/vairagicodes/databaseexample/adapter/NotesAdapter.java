@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class NotesAdapter extends ArrayAdapter<NotesModel> {
     public NotesAdapter(Context context, ArrayList<NotesModel> notesModels) {
-        super(context,0,notesModels);
+        super(context, 0, notesModels);
     }
 
     @NonNull
@@ -27,23 +27,21 @@ public class NotesAdapter extends ArrayAdapter<NotesModel> {
         View v = convertView;
 
 
-        if(v == null){
-            v = LayoutInflater.from(getContext()).inflate(R.layout.notes_view,parent,false);
+        if (v == null) {
+            v = LayoutInflater.from(getContext()).inflate(R.layout.notes_view, parent, false);
         }
 
 
+        NotesModel notesModel = getItem(position);
+        TextView notesTitle = v.findViewById(R.id.notes_view_title);
+        TextView notesDescription = v.findViewById(R.id.notes_view_des);
 
+        if (notesModel != null) {
 
-            NotesModel notesModel = getItem(position);
-            TextView notesTitle = v.findViewById(R.id.notes_view_title);
-            TextView notesDescription = v.findViewById(R.id.notes_view_des);
+            notesTitle.setText(notesModel.getTitle());
+            notesDescription.setText(notesModel.getDescription());
 
-            if(notesModel != null){
-
-                notesTitle.setText(notesModel.getTitle());
-                notesDescription.setText(notesModel.getDescription());
-
-            }
+        }
 
 
         return v;

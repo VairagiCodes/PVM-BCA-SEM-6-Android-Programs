@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,12 +33,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 String noteDes = notesDes.getText().toString();
                 String noteTitle = notesTitle.getText().toString();
 
                 NotesModel notesModel = new NotesModel(noteTitle, noteDes);
-
                 dbHelper.addNotes(notesModel.getTitle(), notesModel.getDescription());
+
+                notesTitle.setText("");
+                notesDes.setText("");
+
+                Toast.makeText(MainActivity.this,"Note Saved",Toast.LENGTH_SHORT).show();
             }
         });
 

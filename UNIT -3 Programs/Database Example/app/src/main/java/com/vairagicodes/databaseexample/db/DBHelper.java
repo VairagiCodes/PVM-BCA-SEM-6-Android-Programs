@@ -35,6 +35,7 @@ public class DBHelper extends SQLiteOpenHelper {
                 + COL_TITLE + " TEXT,"
                 + COL_DESCRIPTION + " TEXT)";
 
+
         db.execSQL(dbQuery);
     }
 
@@ -62,16 +63,21 @@ public class DBHelper extends SQLiteOpenHelper {
         String dbQuery = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(dbQuery, null);
 
-        if (cursor != null) {
+
+        if (cursor.getCount() != 0) {
             cursor.moveToFirst();
+
+            do {
+                NotesModel notesModel = new NotesModel(cursor.getString(1), cursor.getString(2));
+                notesModel.setId(cursor.getInt(0));
+                notesModelList.add(notesModel);
+            }
+
+            while (cursor.moveToNext());
         }
 
-        do {
-            NotesModel notesModel = new NotesModel(cursor.getString(1), cursor.getString(2));
-            notesModelList.add(notesModel);
-        }
+        cursor.close();
 
-        while (cursor.moveToNext());
 
         return notesModelList;
     }
@@ -83,16 +89,28 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(COL_TITLE, notesModel.getTitle());
         values.put(COL_DESCRIPTION, notesModel.getDescription());
 
-        db.update(TABLE_NAME,values,COL_ID + "=?",new String[]{String.valueOf(notesModel.getId())});
-
+        db.update(TABLE_NAME, values, COL_ID + "=?", new String[]{String.valueOf(notesModel.getId())});
+        db.close();
 
     }
 
-    public void deleteRecord(int id){
+    public void deleteRecord(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME,COL_ID + "=?",new String[]{String.valueOf(id)});
+        db.delete(TABLE_NAME, COL_ID + "=?", new String[]{String.valueOf(id)});
 
+    }
 
+    //Code to get a single note
+    public NotesModel getNote(int id) {
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_NAME, new String[]{COL_ID, COL_TITLE, COL_DESCRIPTION}, COL_ID + "=?", new String[]{String.valueOf(id)}, null, null, null);
+        cursor.moveToFirst();
+
+        NotesModel notesModel = new NotesModel(cursor.getString(1),
+                cursor.getString(2));
+        cursor.close();
+        return notesModel;
     }
 
 

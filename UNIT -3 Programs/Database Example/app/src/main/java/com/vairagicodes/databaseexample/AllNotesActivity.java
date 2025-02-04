@@ -1,9 +1,11 @@
 package com.vairagicodes.databaseexample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,29 +23,42 @@ public class AllNotesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_notes);
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         ListView notesListView = findViewById(R.id.notes_list_view);
 
         DBHelper dbHelper = new DBHelper(AllNotesActivity.this);
-        dbHelper.getWritableDatabase();
 
+        ArrayList<NotesModel> notesModels;
 
-        ArrayList<NotesModel> notesModels = (ArrayList<NotesModel>) dbHelper.fetchAllNotes();
-
+        notesModels = (ArrayList<NotesModel>) dbHelper.fetchAllNotes();
         NotesAdapter notesAdapter = new NotesAdapter(this, notesModels);
+
 
         notesListView.setAdapter(notesAdapter);
 
-        notesListView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        notesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(AllNotesActivity.this, NotesActivity.class);
+                NotesModel notesModel = notesAdapter.getItem(i);
+                assert notesModel != null;
+                intent.putExtra("id", notesModel.getId());
+                startActivity(intent);
             }
         });
 
+        notesAdapter.notifyDataSetChanged();
+        dbHelper.close();
+        if (notesModels.isEmpty()) {
+            Toast.makeText(AllNotesActivity.this, "No Notes Found", Toast.LENGTH_SHORT).show();
+        }
+
     }
+
 }
